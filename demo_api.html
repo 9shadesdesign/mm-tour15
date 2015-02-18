@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tour Dates Demo using AJAX</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+<meta name="robots" content="noindex,nofollow" />  
+<style>
+html {
+	width:100%;
+	margin:0;
+	padding:0;
+	background:#FFFFFF;
+	position:relative;
+}
+body {
+	min-height: 100vh;
+	width:100%;
+	max-width:1600px;
+	margin:0 auto;
+	padding:0 0 1px 0;
+	font-size: 100%;
+	line-height: 1.25;
+	font-weight: normal;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	background:#FFFFFF url(images/hero.jpg) repeat-y right top;
+}
+#masthead {
+	margin-top:0;
+	padding-top:100px;
+	font-size:2.5em;
+	color:#FFFFFF;
+}
+h2 {
+	color:#E1E1E1;
+}
+nav {
+	text-align:center;
+	margin: 1em auto;
+}
+nav ul {
+	list-style-type:none;
+	-webkit-appearance:none;
+	margin:0;
+	padding:0;
+}
+li {
+	display:inline-block;
+	margin:0;
+	padding:0;
+}
+nav a {
+	display:block;
+	padding: 4px 6px 0 6px;
+	color: #CFCCA3;
+	font-size:1.25em;
+	text-decoration:underline;
+}
+nav a:hover {
+	display:block;
+	color: #FFFFFF;
+	text-decoration:none;
+	}
+.show {
+	width:80%;
+	max-width:450px;
+	margin: .5em auto 1em auto;
+	padding:1em;
+	font-size:1.5em;
+	border:4.5px solid #3D4C53;
+	-webkit-border-radius:12px;
+	border-radius:12px;
+	background: #FFFFFF;
+	background:rgba(255,255,255,0.70);
+}
+.show a {
+	color:#837D3C;
+}
+.show a:hover {
+	color:#3D4C53;
+}
+.centerText {
+	text-align:center;
+}
+</style>
+
+<script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+$(document).ready(function() { 
+		$('#concerts').hide();
+		$('#output').hide(); 
+   
+	$('.category').click(function(e){
+        e.preventDefault(); //stop default action of the link
+		cat = $(this).attr("href");  //get category from URL
+		loadAJAX(cat);  //load AJAX and parse JSON file
+		
+		
+	});
+});	
+
+
+function loadAJAX(cat)
+{
+	$.ajax({  
+		type: "GET",
+		dataType: "json",  
+		url: "demo-api.php?cat=" + cat,
+		success: mouseJSON,
+	});
+
+	$('#concerts').html('');//clear data
+}
+
+function mouseJSON(data){
+	//$('#output').text(JSON.stringify(data));  //uncomment to view raw output
+	$.each(data.concerts, function(i,item){
+	
+	    var text = '<b>Date</b>: ' + item.EventDate + '<br />';
+		text += '<b>Venue</b>: ' + item.Venue + '<br />';
+		text += '<b>Location</b>: ' + item.Location + '<br />';
+		text += item.Tickets + '<br />';
+		$('<div class="show"></div>').html(text).appendTo('#concerts');
+		$('#concerts').slideDown(500);
+		// $('#output').slideDown(500); //uncomment to view raw output 
+		
+		
+	});
+}
+
+</script>
+</head>
+	<body>
+    <header>
+	<h1 id="masthead" class="centerText">MODEST MOUSE</h1>
+    <h2 class="centerText">2015 Tour Dates</h2>
+    <nav>
+    <ul>
+		<li><a href="march" class="category">March</a></li>
+		<li><a href="april" class="category">April</a></li>
+        <li><a href="may" class="category">May</a></li>
+        <li><a href="june" class="category">June</a></li>
+        <li><a href="july" class="category">July</a></li>
+        </ul>
+        <a href="all" class="category">View All</a>
+        </nav>
+        </header>
+		<div id="concerts">
+			<p>Concerts will go here</p>
+		</div>
+		<div id="output">Results of JSON.stringify go here</div>
+	</body>
+</html>
