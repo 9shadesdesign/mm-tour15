@@ -89,7 +89,7 @@ nav a:hover {
 
 <script type="text/javascript">
 $(document).ready(function() { 
-		$('#concerts').hide();
+		$('#schedule').hide();
 		$('#output').hide(); 
    
 	$('.category').click(function(e){
@@ -111,7 +111,7 @@ function loadAJAX(cat)
 		success: mouseJSON,
 	});
 
-	$('#concerts').html('');//clear data
+	$('#schedule').html('');//clear data
 }
 
 function mouseJSON(data){
@@ -122,8 +122,8 @@ function mouseJSON(data){
 		text += '<b>Venue</b>: ' + item.Venue + '<br />';
 		text += '<b>Location</b>: ' + item.Location + '<br />';
 		text += item.Tickets + '<br />';
-		$('<div class="show"></div>').html(text).appendTo('#concerts');
-		$('#concerts').slideDown(500);
+		$('<div class="show"></div>').html(text).appendTo('#schedule');
+		$('#schedule').slideDown(500);
 		// $('#output').slideDown(500); //uncomment to view raw output 
 		
 		
@@ -147,7 +147,7 @@ function mouseJSON(data){
         <a href="all" class="category">View All</a>
         </nav>
         </header>
-		<div id="concerts">
+		<div id="schedule">
 			<p>Concerts will go here</p>
 		</div>
 		<div id="output">Results of JSON.stringify go here</div>

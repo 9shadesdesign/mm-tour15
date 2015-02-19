@@ -8,7 +8,7 @@
  * named "cat":
  *
  * <code>
- * demo-api.php?cat=march
+ * api.php?cat=march
  * </code>
  *
  * In the example above, the parameter cat is loaded with the string "box" 
